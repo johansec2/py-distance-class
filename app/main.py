@@ -9,7 +9,9 @@ class Distance:
         self.km = km
 
     def _get_km(self, other: Distance | int | float) -> int | float:
-        return other.km
+        if isinstance(other, Distance):
+            return other.km
+        return other
 
     def __str__(self) -> str:
         return f"Distance: {self.km} kilometers."
@@ -24,8 +26,8 @@ class Distance:
     def __radd__(self, other: Union[int, float]) -> "Distance":
         return Distance(self.km + other)
 
-    def __iadd__(self, other: int | float) -> "Distance":
-        self.km += other
+    def __iadd__(self, other: Union["Distance", int, float]) -> "Distance":
+        self.km += self._get_km(other)
         return self
 
     def __mul__(self, other: int | float) -> "Distance":
