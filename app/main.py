@@ -31,12 +31,16 @@ class Distance:
         return self
 
     def __mul__(self, other: int | float) -> "Distance":
+        if isinstance(other, Distance):
+            raise TypeError("Cannot multiply Distance by Distance")
         return Distance(self.km * other)
 
     def __rmul__(self, other: int | float) -> "Distance":
         return Distance(self.km * other)
 
     def __truediv__(self, other: int | float) -> "Distance":
+        if isinstance(other, Distance):
+            raise TypeError("Cannot divide Distance by Distance")
         return Distance(round(self.km / other, 2))
 
     def __lt__(self, other: Union["Distance", int, float]) -> bool:
